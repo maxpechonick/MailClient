@@ -1,0 +1,36 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Letter.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm2 *Form2;
+//---------------------------------------------------------------------------
+__fastcall TForm2::TForm2(TComponent* Owner)
+    : TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm2::ButtonSendClick(TObject *Sender)
+{
+    this->ModalResult = mrOk;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm2::SpeedButtonOpenClick(TObject *Sender)
+{
+    if ( !OpenDialogAttach->Execute() ) return;
+
+    EditAttach->Text = TrimRight(EditAttach->Text);
+    for (int i = 0; i < OpenDialogAttach->Files->Count; i++ )
+    {
+      if ( EditAttach->Text.Length() > 0 )
+          EditAttach->Text = EditAttach->Text + AnsiString("; ");
+      EditAttach->Text = EditAttach->Text + OpenDialogAttach->Files->Strings[i];
+    }
+}
+//---------------------------------------------------------------------------
+
